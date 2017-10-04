@@ -1,9 +1,10 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-class App extends React.Component {
+class Cities extends React.Component {
     constructor(props) {
-        super(props)
-        this.state = { cities: [] }
+        super(props);
+        this.state = { cities: [] };
     }
 
     componentWillMount() {
@@ -21,7 +22,7 @@ class App extends React.Component {
         if (this.state.cities.length > 0) {
             return (
                 <div>
-                    <Header title="Ciudades"/>
+                    <h1>Ciudades</h1>
                     <table>
                         <tbody>
                         {this.state.cities.map((city, i) => <TableRow key = {i} data = {city} />)}
@@ -35,21 +36,15 @@ class App extends React.Component {
     }
 }
 
-class Header extends React.Component {
-    render() {
-        return (
-            <div>
-                <h1>{this.props.title}</h1>
-            </div>
-        );
-    }
-}
-
 class TableRow extends React.Component {
     render() {
         return (
             <tr>
-                <td>{this.props.data.id}</td>
+                <td>
+                    <Link to={"/cities/"+this.props.data.id} key={this.props.data.id}>
+                        {this.props.data.id}
+                    </Link>
+                </td>
                 <td>{this.props.data.name}</td>
                 <td>{this.props.data.lat}</td>
                 <td>{this.props.data.lng}</td>
@@ -58,4 +53,5 @@ class TableRow extends React.Component {
     }
 }
 
-export default App;
+
+export default Cities;

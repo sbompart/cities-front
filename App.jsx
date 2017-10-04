@@ -1,60 +1,38 @@
 import React from 'react';
+import {Switch, Route, Link} from 'react-router-dom';
+import Home from './components/Home.jsx';
+import Cities from './components/Cities.jsx';
+import CityDetail from './components/CityDetail.jsx';
+
+const Main = () => (
+    <main>
+        <Switch>
+            <Route exact path='/' component={Home}/>
+            <Route path="/cities/:id" component={CityDetail}/>
+            <Route path='/cities' component={Cities}/>
+        </Switch>
+    </main>
+);
+
+const Header = () => (
+    <header>
+        <nav>
+            <ul>
+                <li><Link to='/'>Home</Link></li>
+                <li><Link to='/cities'>Ciudades: </Link></li>
+            </ul>
+        </nav>
+    </header>
+);
 
 class App extends React.Component {
-    constructor(props) {
-        super(props)
-        this.state = { cities: [] }
-    }
-
-    componentWillMount() {
-        fetch('http://localhost:3000/api/cities')
-            .then((response) => {
-                return response.json()
-            })
-            .then((cities) => {
-                this.setState({ cities: cities })
-            })
-    }
-
-
-    render() {
-        if (this.state.cities.length > 0) {
-            return (
-                <div>
-                    <Header title="Ciudades"/>
-                    <table>
-                        <tbody>
-                        {this.state.cities.map((city, i) => <TableRow key = {i} data = {city} />)}
-                        </tbody>
-                    </table>
-                </div>
-            )
-        } else {
-            return <p className="text-center">Cargando empleados...</p>
-        }
-    }
-}
-
-class Header extends React.Component {
-    render() {
+    render(){
         return (
             <div>
-                <h1>{this.props.title}</h1>
+                <Header />
+                <Main />
             </div>
-        );
-    }
-}
-
-class TableRow extends React.Component {
-    render() {
-        return (
-            <tr>
-                <td>{this.props.data.id}</td>
-                <td>{this.props.data.name}</td>
-                <td>{this.props.data.lat}</td>
-                <td>{this.props.data.lng}</td>
-            </tr>
-        );
+        )
     }
 }
 
